@@ -12,7 +12,8 @@
 #include <linux/of_gpio.h>
 
 // We do 10 partial updates to every full if we're in partial updates mode.
-const int num_partials = 10;
+// (FIXME : This is not working right now.  We're working on this one...)
+const int num_partials = 20;
 
 enum ssd1680_devices {
     DEV_WS_213,
@@ -519,7 +520,7 @@ static int ssd1680_spi_probe(struct spi_device *spi)
             par->partials = num_partials;
             device_write_cmd(par, 0x26);
             for (i = 0; i < vmem_size; i++) {
-                device_write_data(par, 0x00);       // Black pixels.  This is the back-buffer we're partialing from
+                device_write_data(par, 0xFF);
             }
         }
     }
